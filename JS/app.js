@@ -147,34 +147,40 @@ function checkTypes(pokemon) {
   }
 }
 const getSearchPokemon = async () => {
-
   let searchBox = document.getElementById("searchBox").value.toLowerCase();
   let container = document.getElementById("grid-container");
-  container.innerHTML ="";
+  container.innerHTML = "";
 
   const res = await getPokemonAPI(searchBox);
 
-  if(res === "undefined")
-  {
+  if (res === "undefined") {
     let message = "Theres no such Pokemon";
     alert(message);
-  }else
-  {
+  } else {
     pokemons = [];
     pokemons.push(res);
     createCards();
   }
+};
 
+function searchPoke() {
+  if (document.getElementById("searchBox").value === "") {
+  } else {
+    getSearchPokemon();
+  }
 }
 
-function searchPoke(){
-if(document.getElementById("searchBox").value === "")
-{
+function getPokemonsReset() {
+  let container = document.getElementById("grid-container");
+  document.getElementById("searchBox").value = "";
 
-}
-else{
-  getSearchPokemon();
-}
+  //Reseting the arrays
+  randomNumbers = [];
+  pokemons = [];
+
+  randomNumbers = randomArray();
+  container.innerHTML = "";
+  getPokemons();
 }
 
 getPokemons();
