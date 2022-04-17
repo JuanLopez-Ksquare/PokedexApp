@@ -146,5 +146,35 @@ function checkTypes(pokemon) {
     return pokemon.types[0].type.name;
   }
 }
+const getSearchPokemon = async () => {
+
+  let searchBox = document.getElementById("searchBox").value.toLowerCase();
+  let container = document.getElementById("grid-container");
+  container.innerHTML ="";
+
+  const res = await getPokemonAPI(searchBox);
+
+  if(res === "undefined")
+  {
+    let message = "Theres no such Pokemon";
+    alert(message);
+  }else
+  {
+    pokemons = [];
+    pokemons.push(res);
+    createCards();
+  }
+
+}
+
+function searchPoke(){
+if(document.getElementById("searchBox").value === "")
+{
+
+}
+else{
+  getSearchPokemon();
+}
+}
 
 getPokemons();
