@@ -1,4 +1,5 @@
 let pokemons = [];
+let randomNumbers = randomArray();
 
 function createCards() {
   let mainDivContainer = document.getElementById("full-container");
@@ -25,11 +26,10 @@ function createCards() {
     pokeCard.appendChild(figureSprite);
     figureSprite.appendChild(sprite);
 
-    //Types
     let types = document.createElement("p");
     pokeCard.appendChild(types);
-    types.setAttribute("class", "poke-type");
-    let nodeTypes = document.createTextNode(pokemons[i].types[0].type.name);
+    types.setAttribute("class","poke-type");
+    let nodeTypes = document.createTextNode(checkTypes(pokemons[i]));
     types.appendChild(nodeTypes);
 
     //Stat Div
@@ -110,11 +110,39 @@ const getPokemonAPI = async (id) => {
   }
 };
 
-const getPokemon = async (poke) => {
-  const res = await getPokemonAPI(poke);
 
-  pokemons.push(res);
+const getPokemons = async () => {
+  for(let i = 0;i<12;i++)
+  {
+    const res = await getPokemonAPI(randomNumbers[i]);
+    pokemons.push(res);
+  }
   createCards();
-};
+}
 
-getPokemon("zapdos");
+function randomArray() {
+  let randomNumbers = [];
+
+  for (let i = 0; i < 12; i++) {
+    let number = Math.ceil(Math.random() * (898 - 1) + 1);
+
+    if (randomNumbers.includes(number)) {
+      i--;
+    } else {
+      randomNumbers.push(number);
+    }
+  }
+
+  return randomNumbers;
+}
+
+function checkTypes(pokemon)
+{
+  try{
+    return pokemon.types[0].type.name + "/" + pokemon.types[1].type.name;
+  }catch{
+    return pokemon.types[0].type.name;
+  }
+}
+
+getPokemons();
