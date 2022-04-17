@@ -14,7 +14,12 @@ function createCards() {
     //Name
     let name = document.createElement("a");
     let nodeName = document.createTextNode(pokemons[i].name);
+    name.setAttribute(
+      "href",
+      "https://www.wikidex.net/wiki/" + pokemons[i].name
+    );
     name.setAttribute("class", "poke-name");
+    name.setAttribute("target", "_blank");
     name.appendChild(nodeName);
     pokeCard.appendChild(name);
 
@@ -28,7 +33,7 @@ function createCards() {
 
     let types = document.createElement("p");
     pokeCard.appendChild(types);
-    types.setAttribute("class","poke-type");
+    types.setAttribute("class", "poke-type");
     let nodeTypes = document.createTextNode(checkTypes(pokemons[i]));
     types.appendChild(nodeTypes);
 
@@ -110,15 +115,13 @@ const getPokemonAPI = async (id) => {
   }
 };
 
-
 const getPokemons = async () => {
-  for(let i = 0;i<12;i++)
-  {
+  for (let i = 0; i < 12; i++) {
     const res = await getPokemonAPI(randomNumbers[i]);
     pokemons.push(res);
   }
   createCards();
-}
+};
 
 function randomArray() {
   let randomNumbers = [];
@@ -136,11 +139,10 @@ function randomArray() {
   return randomNumbers;
 }
 
-function checkTypes(pokemon)
-{
-  try{
+function checkTypes(pokemon) {
+  try {
     return pokemon.types[0].type.name + "/" + pokemon.types[1].type.name;
-  }catch{
+  } catch {
     return pokemon.types[0].type.name;
   }
 }
