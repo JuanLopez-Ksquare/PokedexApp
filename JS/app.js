@@ -117,7 +117,6 @@ const getPokemonAPI = async (id) => {
     data = await data.json();
     return data;
   } catch (error) {
-    console.log(error);
     data = "undefined";
     return data;
   }
