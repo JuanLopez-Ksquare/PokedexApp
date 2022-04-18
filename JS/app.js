@@ -1,8 +1,13 @@
 let pokemons = [];
 let randomNumbers = randomArray();
 
-function createCards() {
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    searchPokemon();
+  }
+});
 
+function createCards() {
   const container = document.getElementById("grid-container");
 
   for (let i = 0; i < pokemons.length; i++) {
@@ -30,6 +35,7 @@ function createCards() {
     pokeCard.appendChild(figureSprite);
     figureSprite.appendChild(sprite);
 
+    //Types
     const types = document.createElement("p");
     pokeCard.appendChild(types);
     types.setAttribute("class", "poke-type");
@@ -99,6 +105,8 @@ function createCards() {
     const nodeSpeed = document.createTextNode(pokemons[i].stats[5].base_stat);
     speedValue.appendChild(nodeSpeed);
   }
+
+  document.getElementById("btn-reset").disabled = false;
 }
 
 const getPokemonAPI = async (id) => {
@@ -108,7 +116,8 @@ const getPokemonAPI = async (id) => {
     data = await fetch(url);
     data = await data.json();
     return data;
-  } catch {
+  } catch (error) {
+    console.log(error);
     data = "undefined";
     return data;
   }
@@ -139,16 +148,22 @@ function randomArray() {
 }
 
 function checkTypes(pokemon) {
-
-  if(pokemon.types.length === 2) {
-    return pokemon.types[0].type.name + "/" + pokemon.types[1].type.name;
-  } else{
+  if (pokemon.types.length === 2) {
+    return (
+      pokemon.types[0].type.name +
+      "/" +
+      pokemon.types[1].type.name[0].toUpperCase() +
+      pokemon.types[1].type.name.slice(1) //Had to do this cause mozilla wasnt taking the css correctly
+    );
+  } else {
     return pokemon.types[0].type.name;
   }
 }
 
 const getSearchPokemon = async () => {
-  const searchPokemon = document.getElementById("searchBox").value.toLowerCase();
+  const searchPokemon = document
+    .getElementById("searchBox")
+    .value.toLowerCase();
   const container = document.getElementById("grid-container");
   container.innerHTML = "";
 
@@ -156,7 +171,7 @@ const getSearchPokemon = async () => {
 
   if (res === "undefined") {
     const message = "Theres no such Pokemon";
-    alert(message);
+    confirm(message);
   } else {
     pokemons = [];
     pokemons.push(res);
@@ -179,6 +194,9 @@ function resetAndGetNewPokemons() {
 
   randomNumbers = randomArray();
   container.innerHTML = "";
+
+  document.getElementById("btn-reset").disabled = true;
+
   getPokemons();
 }
 
