@@ -9,7 +9,8 @@ body,html{
   height: 100%;
   margin: auto;
   font-family: 'Press Start 2P', cursive;
-  background-color: #FF5F00;
+  background: rgb(255,228,0);
+  background: radial-gradient(circle, rgba(255,228,0,1) 0%, rgba(205,24,24,1) 100%);
 }
 
 .full-bar-container{
@@ -75,8 +76,7 @@ body,html{
   align-items: center;
   justify-content: center;
   padding: 10px;
-  background: rgb(213,161,0);
-  background: linear-gradient(32deg, rgba(213,161,0,1) 22%, rgba(0,117,190,1) 45%, rgba(10,40,95,1) 65%, rgba(255,244,0,1) 99%);
+  background: linear-gradient(32deg, #DA1212 22%, rgba(0,117,190,1) 45%, #041562 65%, #DA1212  99%);
   border: 2px black solid;
   width: auto;
   border-radius: 10px;
@@ -112,37 +112,6 @@ body,html{
   font-size: 15px;
 }
 
-@media only screen and (max-width: 320px){
-
-  .full-bar-container{
-    flex-wrap: wrap;
-  }
-  .grid-container {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: repeat(1, 1fr);
-      justify-content:space-evenly;
-      align-content: center;
-      height: 100%;
-  }
-
-
-}
-
-@media only screen and (max-width: 500px){
-  .full-bar-container{
-    flex-wrap: wrap;
-  }
-  .grid-container {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: repeat(1, 1fr);
-      justify-content:space-evenly;
-      align-content: center;
-      height: 100%;
-  }
-
-}
 
 
 
