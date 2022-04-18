@@ -2,18 +2,17 @@ let pokemons = [];
 let randomNumbers = randomArray();
 
 function createCards() {
-  let mainDivContainer = document.getElementById("full-container");
-  let container = document.getElementById("grid-container");
-  //let pokeCard = document.getElementById("poke-card");
+
+  const container = document.getElementById("grid-container");
 
   for (let i = 0; i < pokemons.length; i++) {
-    let pokeCard = document.createElement("div");
+    const pokeCard = document.createElement("div");
     pokeCard.setAttribute("class", "poke-card");
     container.appendChild(pokeCard);
 
     //Name
-    let name = document.createElement("a");
-    let nodeName = document.createTextNode(pokemons[i].name);
+    const name = document.createElement("a");
+    const nodeName = document.createTextNode(pokemons[i].name);
     name.setAttribute(
       "href",
       "https://www.wikidex.net/wiki/" + pokemons[i].name
@@ -24,80 +23,80 @@ function createCards() {
     pokeCard.appendChild(name);
 
     //Image
-    let figureSprite = document.createElement("figure");
+    const figureSprite = document.createElement("figure");
     figureSprite.setAttribute("class", "img-style");
-    let sprite = document.createElement("img");
+    const sprite = document.createElement("img");
     sprite.src = pokemons[i].sprites.front_default;
     pokeCard.appendChild(figureSprite);
     figureSprite.appendChild(sprite);
 
-    let types = document.createElement("p");
+    const types = document.createElement("p");
     pokeCard.appendChild(types);
     types.setAttribute("class", "poke-type");
-    let nodeTypes = document.createTextNode(checkTypes(pokemons[i]));
+    const nodeTypes = document.createTextNode(checkTypes(pokemons[i]));
     types.appendChild(nodeTypes);
 
     //Stat Div
-    let statDiv = document.createElement("div");
+    const statDiv = document.createElement("div");
     statDiv.setAttribute("class", "stats-container");
     pokeCard.append(statDiv);
 
     //txtStats Div
-    let txtStatsDiv = document.createElement("div");
+    const txtStatsDiv = document.createElement("div");
     txtStatsDiv.setAttribute("class", "txt-stats");
     statDiv.appendChild(txtStatsDiv);
 
     //Hp
-    let hpTxt = document.createElement("p");
+    const hpTxt = document.createElement("p");
     txtStatsDiv.appendChild(hpTxt);
-    let nodeHpTxt = document.createTextNode("HP:");
+    const nodeHpTxt = document.createTextNode("HP:");
     hpTxt.appendChild(nodeHpTxt);
 
     //Atack
-    let attackValueTxt = document.createElement("p");
+    const attackValueTxt = document.createElement("p");
     txtStatsDiv.appendChild(attackValueTxt);
-    let nodeAttackTxt = document.createTextNode("Attack:");
+    const nodeAttackTxt = document.createTextNode("Attack:");
     attackValueTxt.appendChild(nodeAttackTxt);
 
     //Defense
-    let defenseValueTxt = document.createElement("p");
+    const defenseValueTxt = document.createElement("p");
     txtStatsDiv.appendChild(defenseValueTxt);
-    let nodeDefenseTxt = document.createTextNode("Defense:");
+    const nodeDefenseTxt = document.createTextNode("Defense:");
     defenseValueTxt.appendChild(nodeDefenseTxt);
 
     //Speed
-    let speedValueTxt = document.createElement("p");
+    const speedValueTxt = document.createElement("p");
     txtStatsDiv.appendChild(speedValueTxt);
-    let nodeSpeedTxt = document.createTextNode("Speed:");
+    const nodeSpeedTxt = document.createTextNode("Speed:");
     speedValueTxt.appendChild(nodeSpeedTxt);
 
     //NumStats Div
-    let numStatsDiv = document.createElement("div");
+    const numStatsDiv = document.createElement("div");
     numStatsDiv.setAttribute("class", "num-stats");
     statDiv.appendChild(numStatsDiv);
 
     //Hp
-    let hp = document.createElement("p");
+    const hp = document.createElement("p");
     numStatsDiv.appendChild(hp);
-    let nodeHp = document.createTextNode(pokemons[i].stats[0].base_stat);
+    const nodeHp = document.createTextNode(pokemons[i].stats[0].base_stat);
     hp.appendChild(nodeHp);
 
     //Atack
-    let attackValue = document.createElement("p");
+    const attackValue = document.createElement("p");
     numStatsDiv.appendChild(attackValue);
-    let nodeAttack = document.createTextNode(pokemons[i].stats[1].base_stat);
+    const nodeAttack = document.createTextNode(pokemons[i].stats[1].base_stat);
     attackValue.appendChild(nodeAttack);
 
     //Defense
-    let defenseValue = document.createElement("p");
+    const defenseValue = document.createElement("p");
     numStatsDiv.appendChild(defenseValue);
-    let nodeDefense = document.createTextNode(pokemons[i].stats[2].base_stat);
+    const nodeDefense = document.createTextNode(pokemons[i].stats[2].base_stat);
     defenseValue.appendChild(nodeDefense);
 
     //Speed
-    let speedValue = document.createElement("p");
+    const speedValue = document.createElement("p");
     numStatsDiv.appendChild(speedValue);
-    let nodeSpeed = document.createTextNode(pokemons[i].stats[5].base_stat);
+    const nodeSpeed = document.createTextNode(pokemons[i].stats[5].base_stat);
     speedValue.appendChild(nodeSpeed);
   }
 }
@@ -140,21 +139,23 @@ function randomArray() {
 }
 
 function checkTypes(pokemon) {
-  try {
+
+  if(pokemon.types.length === 2) {
     return pokemon.types[0].type.name + "/" + pokemon.types[1].type.name;
-  } catch {
+  } else{
     return pokemon.types[0].type.name;
   }
 }
+
 const getSearchPokemon = async () => {
-  let searchBox = document.getElementById("searchBox").value.toLowerCase();
-  let container = document.getElementById("grid-container");
+  const searchPokemon = document.getElementById("searchBox").value.toLowerCase();
+  const container = document.getElementById("grid-container");
   container.innerHTML = "";
 
-  const res = await getPokemonAPI(searchBox);
+  const res = await getPokemonAPI(searchPokemon);
 
   if (res === "undefined") {
-    let message = "Theres no such Pokemon";
+    const message = "Theres no such Pokemon";
     alert(message);
   } else {
     pokemons = [];
@@ -163,15 +164,13 @@ const getSearchPokemon = async () => {
   }
 };
 
-function searchPoke() {
-  if (document.getElementById("searchBox").value === "") {
-  } else {
-    getSearchPokemon();
-  }
+function searchPokemon() {
+  if (document.getElementById("searchBox").value === "") return;
+  getSearchPokemon();
 }
 
-function getPokemonsReset() {
-  let container = document.getElementById("grid-container");
+function resetAndGetNewPokemons() {
+  const container = document.getElementById("grid-container");
   document.getElementById("searchBox").value = "";
 
   //Reseting the arrays
